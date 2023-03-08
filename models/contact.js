@@ -5,9 +5,18 @@ const { handleMongooseError } = require("../helpers");
 
 const contactSchema = new Schema(
   {
-    name: { type: String, required: [true, "Set name for contact"] },
-    email: { type: String, required: true },
-    phone: { type: String, required: true },
+    name: {
+      type: String,
+      required: [true, "Set name for contact"],
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
     favorite: {
       type: Boolean,
       default: false,
@@ -15,8 +24,6 @@ const contactSchema = new Schema(
   },
   { versionKey: false, timestamps: true }
 );
-
-contactSchema.post("save", handleMongooseError);
 
 const addSchema = Joi.object({
   name: Joi.string().min(3).max(30).required(),
@@ -30,6 +37,8 @@ const addSchema = Joi.object({
 const favoriteSchema = Joi.object({
   favorite: Joi.boolean().required(),
 });
+
+contactSchema.post("save", handleMongooseError);
 
 const schema = {
   addSchema,
